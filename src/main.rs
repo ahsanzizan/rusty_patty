@@ -53,6 +53,14 @@ fn main() {
                     // Reset previous command since 'dir' doesn't produce output for piping
                     previous_command = None;
                 }
+                "echo" => {
+                    // Echo command
+                    let output = args.collect::<Vec<&str>>().join(" ");
+                    println!("{}", output);
+
+                    // Reset previous command since 'echo' doesn't produce output for piping
+                    previous_command = None;
+                }
                 "exit" => return, // Exit the REPL
                 command => {
                     // External command
