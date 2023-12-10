@@ -39,6 +39,24 @@ fn echo(args: std::str::SplitWhitespace<'_>) {
     println!("{}", output);
 }
 
+// Function to handle the "rm" command
+fn rm(args: std::str::SplitWhitespace<'_>) {
+    // Extract the file path from the args
+    let file_path: Option<&str> = args.peekable().peek().map(|x| *x);
+
+    // Check if a file path is provided
+    match file_path {
+        Some(path) => {
+            if let Err(e) = std::fs::remove_file(path) {
+                eprintln!("{}", e);
+            }
+        }
+        None => {
+            eprintln!("Usage: rm <file_path>");
+        }
+    }
+}
+
 // Function to execute an external command
 fn execute_external_command(
     command: &str,
@@ -93,6 +111,10 @@ fn main() {
                 }
                 "echo" => {
                     echo(args);
+                    previous_command = None;
+                }
+                "rm" => {
+                    rm(args);
                     previous_command = None;
                 }
                 "exit" => return,
