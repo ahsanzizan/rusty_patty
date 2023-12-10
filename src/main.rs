@@ -82,6 +82,20 @@ fn execute_external_command(
     }
 }
 
+// Function to display help information
+fn display_help() {
+    println!("Available commands:");
+    println!("  cd <directory>   - Change current directory");
+    println!("  dir              - List entries in the current directory");
+    println!("  echo <message>   - Print a message to the console");
+    println!("  rm <file_path>   - Remove a file");
+    println!("  exit             - Exit the shell");
+    println!("  <command>        - Execute an external command");
+
+    println!("Usage:");
+    println!("  Multiple commands can be chained using ' | ' for piping.");
+}
+
 // Main REPL loop
 fn main() {
     // Main REPL loop
@@ -101,6 +115,10 @@ fn main() {
             let args = parts;
 
             match command {
+                "help" => {
+                    display_help();
+                    previous_command = None;
+                }
                 "cd" => {
                     change_directory(&mut args.collect::<Vec<&str>>());
                     previous_command = None;
