@@ -3,7 +3,9 @@ use std::io::{self, Write};
 use std::process::{exit, Command, Stdio};
 
 fn execute_command(command: &str, args: Vec<&str>, input: Option<Vec<u8>>) -> Vec<u8> {
-    let mut child: std::process::Child = Command::new(command)
+    let mut child: std::process::Child = Command::new("cmd")
+        .arg("/C")
+        .arg(command)
         .args(&args)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
