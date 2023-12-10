@@ -1,3 +1,4 @@
+use std::fs::File;
 use std::io::{self, Write};
 use std::process::{exit, Command, Stdio};
 
@@ -56,6 +57,31 @@ fn main() {
                     previous_output.take(),
                 ));
             }
+        } else if input.contains(">>") {
+            let mut parts: std::iter::Map<std::str::Split<'_, &str>, fn(&str) -> &str> =
+                input.split(">>").map(str::trim);
+            let command: &str = parts.next().unwrap();
+            let filename: &str = parts.next().expect("Missing filename after '>>'");
+            let output: Vec<u8> = execute_command(command, vec![], previous_output.take());
+
+            let mut file: File = File::create(filename).expect("Failed to create file");
+            file.write_all(&output).expect("Failed to write to file");
+        } else if input.contains('>') {
+            let mut parts: std::iter::Map<std::str::Split<'_, char>, fn(&str) -> &str> =
+                input.split('>').map(str::trim);
+            let command: &str = parts.next().unwrap();
+            let filename: &str = parts.next().expect("Missing filename after '>");
+            let output: Vec<u8> = execute_command(command, vec![], previous_output.take());
+
+            let mut file: File = File::create(filename).expect("Failed to create file");
+            file.write_all(&output).expect("Failed to write to file");
+        } else if input.contains('<') {
+            let mut parts: std::iter::Map<std::str::Split<'_, char>, fn(&str) -> &str> =
+                input.split('<').map(str::trim);
+            let command: &str = parts.next().unwrap();
+            let filename: &str = parts.next().expect("Missing filename after '<'");
+            let input_data: Vec<u8> = std::fs::read(filename).expect("Failed to read from file");
+            previous_output = Some(execute_command(command, vec![], Some(input_data)));
         } else {
             let parts: Vec<&str> = input.split_whitespace().collect();
             previous_output = Some(execute_command(
