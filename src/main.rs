@@ -42,6 +42,10 @@ fn main() {
                     commands::rm(args);
                     previous_command = None;
                 }
+                "pwd" => {
+                    commands::pwd();
+                    previous_command = None;
+                }
                 "exit" => return,
                 command => {
                     let stdin = previous_command

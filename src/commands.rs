@@ -1,6 +1,6 @@
-use std::{io, env};
 use std::path::Path;
 use std::process::{Command, Stdio};
+use std::{env, io};
 
 // Function to handle the "cd" command
 pub fn change_directory(args: &mut Vec<&str>) {
@@ -53,6 +53,15 @@ pub fn rm(args: std::str::SplitWhitespace<'_>) {
         None => {
             eprintln!("Usage: rm <file_path>");
         }
+    }
+}
+
+// Function to print the current working directory
+pub fn pwd() {
+    if let Ok(current_dir) = env::current_dir() {
+        println!("{}", current_dir.display());
+    } else {
+        eprintln!("Error retrieving current working directory");
     }
 }
 
