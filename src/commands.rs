@@ -97,6 +97,7 @@ pub fn display_help() {
     println!("  dir              - List entries in the current directory");
     println!("  echo <message>   - Print a message to the console");
     println!("  rm <file_path>   - Remove a file");
+    println!("  pwd              - Get current working directory");
     println!("  exit             - Exit the shell");
     println!("  <command>        - Execute an external command");
 
