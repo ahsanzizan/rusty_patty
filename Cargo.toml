@@ -1,5 +1,5 @@
 [package]
-name = "shell"
+name = "rusty_patty"
 version = "0.1.0"
 edition = "2021"
 
