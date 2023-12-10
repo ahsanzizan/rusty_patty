@@ -3,7 +3,6 @@ use std::process::Stdio;
 
 mod commands;
 
-// Main REPL loop
 fn main() {
     // Main REPL loop
     loop {
