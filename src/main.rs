@@ -37,6 +37,22 @@ fn main() {
                     // Reset previous command since 'cd' doesn't produce output
                     previous_command = None;
                 }
+                "dir" => {
+                    // Directory listing command
+                    let current_dir = env::current_dir().unwrap();
+                    if let Ok(entries) = current_dir.read_dir() {
+                        for entry in entries {
+                            if let Ok(entry) = entry {
+                                println!("{}", entry.file_name().to_string_lossy());
+                            }
+                        }
+                    } else {
+                        eprintln!("Error listing directory");
+                    }
+
+                    // Reset previous command since 'dir' doesn't produce output for piping
+                    previous_command = None;
+                }
                 "exit" => return, // Exit the REPL
                 command => {
                     // External command
