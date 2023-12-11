@@ -39,7 +39,7 @@ pub fn echo(args: std::str::SplitWhitespace<'_>) {
 }
 
 // Function to handle the "rm" command
-pub fn rm(args: std::str::SplitWhitespace<'_>) {
+pub fn remove_file(args: std::str::SplitWhitespace<'_>) {
     // Extract the file path from the args
     let file_path: Option<&str> = args.peekable().peek().map(|x| *x);
 
@@ -57,7 +57,7 @@ pub fn rm(args: std::str::SplitWhitespace<'_>) {
 }
 
 // Function to print the current working directory
-pub fn pwd() {
+pub fn print_working_directory() {
     if let Ok(current_dir) = env::current_dir() {
         println!("{}", current_dir.display());
     } else {

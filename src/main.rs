@@ -38,11 +38,11 @@ fn main() {
                     previous_command = None;
                 }
                 "rm" => {
-                    commands::rm(args);
+                    commands::remove_file(args);
                     previous_command = None;
                 }
                 "pwd" => {
-                    commands::pwd();
+                    commands::print_working_directory();
                     previous_command = None;
                 }
                 "exit" => return,
