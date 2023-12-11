@@ -144,7 +144,8 @@ pub fn display_help() {
     println!("  pwd                           - Get current working directory");
     println!("  mkdir <directory_path>        - Create a directory");
     println!("  rmdir <directory_path>        - Remove a directory");
-    println!("  alias <alias_name> <command>  - Remove a directory");
+    println!("  alias <alias_name> <command>  - Make alias of a command");
+    println!("  bg <command>                  - Execute command in the background");
     println!("  exit                          - Exit the shell");
 
     println!("Usage:");
