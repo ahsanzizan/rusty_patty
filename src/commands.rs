@@ -1,6 +1,5 @@
+use std::env;
 use std::path::Path;
-use std::process::{Command, Stdio};
-use std::{env, io};
 
 // Function to handle the "cd" command
 pub fn change_directory(args: &mut Vec<&str>) {
@@ -62,31 +61,6 @@ pub fn print_working_directory() {
         println!("{}", current_dir.display());
     } else {
         eprintln!("Error retrieving current working directory");
-    }
-}
-
-// Function to execute an external command
-pub fn execute_external_command(
-    command: &str,
-    args: std::str::SplitWhitespace<'_>,
-    stdin: Stdio,
-    stdout: Stdio,
-) -> Option<std::process::Child> {
-    // Spawn the external command process
-    let output: Result<std::process::Child, io::Error> = Command::new(command)
-        .args(args)
-        .stdin(stdin)
-        .stdout(stdout)
-        .spawn();
-
-    // Handle the result of spawning the process
-    match output {
-        Ok(output) => Some(output),
-        Err(e) => {
-            // Print an error message and return None on error
-            eprintln!("{}", e);
-            None
-        }
     }
 }
 

@@ -1,5 +1,4 @@
 use std::io::{self, Write};
-use std::process::Stdio;
 
 mod commands;
 
@@ -46,25 +45,8 @@ fn main() {
                     previous_command = None;
                 }
                 "exit" => return,
-                command => {
-                    let stdin = previous_command
-                        .map_or(Stdio::inherit(), |output: std::process::Child| {
-                            Stdio::from(output.stdout.unwrap())
-                        });
-
-                    let stdout = if commands.peek().is_some() {
-                        Stdio::piped()
-                    } else {
-                        Stdio::inherit()
-                    };
-
-                    if let Some(output) =
-                        commands::execute_external_command(command, args, stdin, stdout)
-                    {
-                        previous_command = Some(output);
-                    } else {
-                        previous_command = None;
-                    }
+                _ => {
+                    println!("Command not found")
                 }
             }
         }
