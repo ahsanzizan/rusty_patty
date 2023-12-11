@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::env;
 use std::path::Path;
 
@@ -94,6 +95,18 @@ pub fn remove_directory(args: std::str::SplitWhitespace<'_>) {
         None => {
             eprintln!("Usage: rmdir <directory_path>");
         }
+    }
+}
+
+// Function to handle the 'alias' command
+pub fn make_alias(
+    alias_map: &mut HashMap<String, String>,
+    args: &mut std::str::SplitWhitespace<'_>,
+) {
+    if let (Some(alias), Some(cmd)) = (args.next(), args.next()) {
+        alias_map.insert(alias.to_string(), cmd.to_string());
+    } else {
+        eprintln!("Usage: alias <alias_name> <command>");
     }
 }
 

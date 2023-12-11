@@ -33,12 +33,8 @@ fn main() {
 
             match resolved_command {
                 "alias" => {
-                    // Handle alias command
-                    if let (Some(alias), Some(cmd)) = (args.next(), args.next()) {
-                        alias_map.insert(alias.to_string(), cmd.to_string());
-                    } else {
-                        eprintln!("Usage: alias <alias_name> <command>");
-                    }
+                    commands::make_alias(&mut alias_map, &mut args);
+                    previous_command = None;
                 }
                 "help" => {
                     commands::display_help();
