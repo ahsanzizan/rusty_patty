@@ -1,6 +1,7 @@
-use std::collections::HashMap;
-use std::env;
+use std::collections::{HashMap, VecDeque};
 use std::path::Path;
+use std::process::Command;
+use std::{env, thread};
 
 // Function to handle the "cd" command
 pub fn change_directory(args: &mut Vec<&str>) {
@@ -108,6 +109,29 @@ pub fn make_alias(
     } else {
         eprintln!("Usage: alias <alias_name> <command>");
     }
+}
+
+// Background Job interface
+pub struct BackgroundJob {
+    pub command: String,
+    pub status: Option<std::process::ExitStatus>,
+}
+
+// Function to handle the 'bg' command
+pub fn exec_background_job(
+    args: &mut std::str::SplitWhitespace,
+    background_jobs: &mut VecDeque<thread::JoinHandle<BackgroundJob>>,
+) {
+    let cmd = args.collect::<Vec<&str>>().join(" ");
+    let child = thread::spawn(move || {
+        let status = Command::new("sh").arg("-c").arg(&cmd).status();
+        BackgroundJob {
+            command: cmd,
+            status: status.ok(),
+        }
+    });
+
+    background_jobs.push_back(child);
 }
 
 // Function to display help information

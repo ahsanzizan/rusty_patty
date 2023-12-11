@@ -1,12 +1,15 @@
 use std::{
-    collections::HashMap,
+    collections::{HashMap, VecDeque},
     io::{self, Write},
+    thread,
 };
 
 mod commands;
 
 fn main() {
     let mut alias_map: HashMap<String, String> = HashMap::new();
+    let mut background_jobs: VecDeque<thread::JoinHandle<commands::BackgroundJob>> =
+        VecDeque::new();
     println!("Type 'help' for list of all commands available");
 
     // Main REPL loop
@@ -68,6 +71,7 @@ fn main() {
                     commands::remove_directory(args);
                     previous_command = None;
                 }
+                "bg" => commands::exec_background_job(&mut args, &mut background_jobs),
                 "exit" => return,
                 _ => {
                     println!("Command not found")
