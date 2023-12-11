@@ -7,6 +7,7 @@ mod commands;
 
 fn main() {
     let mut alias_map: HashMap<String, String> = HashMap::new();
+    println!("Type 'help' for list of all commands available");
 
     // Main REPL loop
     loop {
