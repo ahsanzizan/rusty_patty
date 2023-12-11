@@ -55,7 +55,7 @@ pub fn remove_file(args: std::str::SplitWhitespace<'_>) {
     }
 }
 
-// Function to print the current working directory
+// Function to handle the 'pwd' command
 pub fn print_working_directory() {
     if let Ok(current_dir) = env::current_dir() {
         println!("{}", current_dir.display());
