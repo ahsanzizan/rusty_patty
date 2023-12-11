@@ -44,6 +44,10 @@ fn main() {
                     commands::print_working_directory();
                     previous_command = None;
                 }
+                "mkdir" => {
+                    commands::make_directory(args);
+                    previous_command = None;
+                }
                 "exit" => return,
                 _ => {
                     println!("Command not found")

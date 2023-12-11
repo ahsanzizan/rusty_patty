@@ -1,4 +1,5 @@
 use std::env;
+use std::mem::zeroed;
 use std::path::Path;
 
 // Function to handle the "cd" command
@@ -61,6 +62,24 @@ pub fn print_working_directory() {
         println!("{}", current_dir.display());
     } else {
         eprintln!("Error retrieving current working directory");
+    }
+}
+
+// Function to handle the 'mkdir' command
+pub fn make_directory(args: std::str::SplitWhitespace<'_>) {
+    // Extract the directory path from the arguments
+    let dir_path: Option<&str> = args.peekable().peek().map(|x| *x);
+
+    // Check if a directory path is provided
+    match dir_path {
+        Some(path) => {
+            if let Err(e) = std::fs::create_dir(path) {
+                eprintln!("{}", e);
+            }
+        }
+        None => {
+            eprintln!("Usage: mkdir <directory_path>")
+        }
     }
 }
 
