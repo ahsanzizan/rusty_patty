@@ -1,5 +1,4 @@
 use std::env;
-use std::mem::zeroed;
 use std::path::Path;
 
 // Function to handle the "cd" command
