@@ -85,13 +85,14 @@ pub fn make_directory(args: std::str::SplitWhitespace<'_>) {
 // Function to display help information
 pub fn display_help() {
     println!("Available commands:");
-    println!("  cd <directory>   - Change current directory");
-    println!("  dir              - List entries in the current directory");
-    println!("  echo <message>   - Print a message to the console");
-    println!("  rm <file_path>   - Remove a file");
-    println!("  pwd              - Get current working directory");
-    println!("  exit             - Exit the shell");
-    println!("  <command>        - Execute an external command");
+    println!("  cd <directory>         - Change current directory");
+    println!("  dir                    - List entries in the current directory");
+    println!("  echo <message>         - Print a message to the console");
+    println!("  rm <file_path>         - Remove a file");
+    println!("  pwd                    - Get current working directory");
+    println!("  mkdir <directory_path  - Create a directory");
+    println!("  exit                   - Exit the shell");
+    println!("  <command>              - Execute an external command");
 
     println!("Usage:");
     println!("  Multiple commands can be chained using ' | ' for piping.");
