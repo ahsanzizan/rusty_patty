@@ -1,8 +1,13 @@
-use std::io::{self, Write};
+use std::{
+    collections::HashMap,
+    io::{self, Write},
+};
 
 mod commands;
 
 fn main() {
+    let mut alias_map: HashMap<String, String> = HashMap::new();
+
     // Main REPL loop
     loop {
         print!("> ");
@@ -17,9 +22,23 @@ fn main() {
         while let Some(command) = commands.next() {
             let mut parts = command.trim().split_whitespace();
             let command = parts.next().unwrap();
-            let args = parts;
+            let mut args = parts;
 
-            match command {
+            // Check for aliases
+            let resolved_command = match alias_map.get(command) {
+                Some(alias) => alias.as_str(),
+                None => command,
+            };
+
+            match resolved_command {
+                "alias" => {
+                    // Handle alias command
+                    if let (Some(alias), Some(cmd)) = (args.next(), args.next()) {
+                        alias_map.insert(alias.to_string(), cmd.to_string());
+                    } else {
+                        eprintln!("Usage: alias <alias_name> <command>");
+                    }
+                }
                 "help" => {
                     commands::display_help();
                     previous_command = None;
