@@ -82,6 +82,21 @@ pub fn make_directory(args: std::str::SplitWhitespace<'_>) {
     }
 }
 
+// Function to handle the 'rmdir' command
+pub fn remove_directory(args: std::str::SplitWhitespace<'_>) {
+    let dir_path: Option<&str> = args.peekable().peek().map(|x| *x);
+    match dir_path {
+        Some(path) => {
+            if let Err(e) = std::fs::remove_dir(path) {
+                eprintln!("{}", e);
+            }
+        }
+        None => {
+            eprintln!("Usage: rmdir <directory_path>");
+        }
+    }
+}
+
 // Function to display help information
 pub fn display_help() {
     println!("Available commands:");

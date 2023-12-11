@@ -48,6 +48,10 @@ fn main() {
                     commands::make_directory(args);
                     previous_command = None;
                 }
+                "rmdir" => {
+                    commands::remove_directory(args);
+                    previous_command = None;
+                }
                 "exit" => return,
                 _ => {
                     println!("Command not found")
